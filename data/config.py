@@ -18,6 +18,12 @@ def load_config() -> Env:
             "BOT_TOKEN is missing or empty. Set it in your .env file."
         )
 
+    if not env.str("IELTS_BOT_INTERNAL_SECRET", "").strip():
+        raise ConfigError(
+            "IELTS_BOT_INTERNAL_SECRET is missing. It must match "
+            "TELEGRAM_BOT_INTERNAL_SECRET in the Django backend .env file."
+        )
+
     return env
 
 
