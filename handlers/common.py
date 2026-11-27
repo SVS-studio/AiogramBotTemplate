@@ -20,6 +20,7 @@ from services.i18n import (
     SUPPORTED_LANGUAGES,
     get_text,
 )
+from services.platform_api import PlatformAPIError, get_platform_profile, verify_telegram_link
 from services.user_preferences import (
     get_settings,
     register_user,
@@ -125,23 +126,27 @@ async def _show_section(
         keyboard = back_home_inline_keyboard(language)
 
     elif section == "profile":
-        settings = await get_settings(current_user.id)
-
-        username = (
-            f"@{current_user.username}"
-            if current_user.username
-            else "—"
-        )
-
-        text = get_text(
-            language,
-            "profile",
-            name=escape(current_user.full_name),
-            user_id=str(current_user.id),
-            username=escape(username),
-            language_name=LANGUAGE_NAMES[language],
-            referral_count=str(settings["referral_count"]),
-        )
+        try:
+            platform_profile = await get_platform_profile(current_user.id)
+            text = get_text(
+                language,
+                "profile_summary",
+                first_name=escape(str(platform_profile.get("first_name") or "—")),
+                email=escape(str(platform_profile.get("email") or "—")),
+                plan=escape(str(platform_profile.get("plan") or "—")),
+                level=escape(str(platform_profile.get("english_level") or "—")),
+                target=f"{platform_profile.get('target_band_score', 0):g}",
+                overall=f"{platform_profile.get('overall_band_score', 0):g}",
+                listening=f"{platform_profile.get('listening_score', 0):g}",
+                reading=f"{platform_profile.get('reading_score', 0):g}",
+                writing=f"{platform_profile.get('writing_score', 0):g}",
+                speaking=f"{platform_profile.get('speaking_score', 0):g}",
+                streak=str(platform_profile.get("user_streak", 0)),
+                tests=str(platform_profile.get("test_completed", 0)),
+            )
+        except PlatformAPIError as exc:
+            key = "account_not_linked" if exc.status_code == 404 else "platform_error"
+            text = get_text(language, key)
 
         keyboard = back_home_inline_keyboard(language)
 
@@ -180,45 +185,47 @@ async def _show_section(
 @router.message(CommandStart())
 async def start_handler(message: Message) -> None:
     current_user = message.from_user
-
     if current_user is None:
         return
 
-    referrer_id = None
-
     parts = (message.text or "").split(maxsplit=1)
+    payload = parts[1].strip() if len(parts) == 2 else ""
+    referrer_id = None
+    link_result = None
+    link_error = False
 
-    if len(parts) == 2 and parts[1].startswith("ref_"):
-        raw_referrer = parts[1][4:]
-
+    if payload.startswith("ref_"):
+        raw_referrer = payload[4:]
         if raw_referrer.isdigit():
             referrer_id = int(raw_referrer)
+    elif payload:
+        try:
+            link_result = await verify_telegram_link(current_user.id, payload)
+        except PlatformAPIError:
+            link_error = True
 
-    _, referral_credited = await register_user(
-        current_user.id,
-        referrer_id,
-    )
-
+    _, referral_credited = await register_user(current_user.id, referrer_id)
     settings = await get_settings(current_user.id)
     language = settings["language"]
 
-    greeting = get_text(
-        language,
-        "welcome",
-        name=escape(current_user.first_name or "there"),
-    )
+    if link_result and link_result.get("success"):
+        greeting = get_text(language, "link_success")
+    elif link_error:
+        greeting = get_text(language, "link_failed")
+    else:
+        greeting = get_text(
+            language,
+            "welcome",
+            name=escape(current_user.first_name or "there"),
+        )
 
     if referral_credited:
-        greeting += (
-            "\n\n"
-            + get_text(language, "referral_welcome")
-        )
+        greeting += "\n\n" + get_text(language, "referral_welcome")
 
     await message.answer(
         greeting,
         reply_markup=main_reply_keyboard(language),
     )
-
     await message.answer(
         get_text(language, "menu_title"),
         reply_markup=main_inline_keyboard(language),
