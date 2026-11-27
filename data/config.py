@@ -25,6 +25,14 @@ def get_bot_token(env: Env) -> str:
     return env.str("BOT_TOKEN").strip()
 
 
+def get_platform_api_base_url(env: Env) -> str:
+    return env.str("IELTS_API_BASE_URL", "http://127.0.0.1:8000").strip().rstrip("/")
+
+
+def get_platform_api_secret(env: Env) -> str:
+    return env.str("IELTS_BOT_INTERNAL_SECRET", "").strip()
+
+
 def get_admin_ids(env: Env) -> set[int]:
     raw_admins = env.list("ADMINS", subcast=str, default=[])
     try:
