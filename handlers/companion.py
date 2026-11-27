@@ -69,7 +69,7 @@ async def _send_verix_answer(message: Message, prompt: str) -> None:
         await message.answer(get_text(language, "verix_too_long"))
         return
 
-    await message.chat.do("typing")
+    await message.bot.send_chat_action(chat_id=message.chat.id, action="typing")
     try:
         answer = await ask_verix(message.from_user.id, prompt)
     except PlatformAPIError as exc:
