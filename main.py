@@ -19,14 +19,13 @@ from handlers import setup_routers
 
 
 async def on_startup(bot: Bot, admin_ids: set[int]) -> None:
-    logging.getLogger(__name__).info("Bot started")
+    logger = logging.getLogger(__name__)
+    logger.info("Bot started")
     for admin_id in admin_ids:
         try:
             await bot.send_message(admin_id, "Bot ishga tushdi.")
         except Exception:
-            logging.getLogger(__name__).exception(
-                "Could not send startup notification to admin_id=%s", admin_id
-            )
+            logger.exception("Could not send startup notification to admin_id=%s", admin_id)
 
 
 async def main() -> None:
@@ -44,9 +43,11 @@ async def main() -> None:
     dispatcher.include_router(setup_routers())
 
     admin_ids = get_admin_ids(env)
-    dispatcher.startup.register(
-        lambda: on_startup(bot=bot, admin_ids=admin_ids)
-    )
+
+    async def startup_handler(dispatcher: Dispatcher) -> None:
+        await on_startup(bot=bot, admin_ids=admin_ids)
+
+    dispatcher.startup.register(startup_handler)
 
     try:
         await bot.delete_webhook(drop_pending_updates=should_drop_pending_updates(env))
