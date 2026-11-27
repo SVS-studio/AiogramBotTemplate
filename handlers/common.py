@@ -1,6 +1,6 @@
 from aiogram import F, Router
 from aiogram.filters import Command, CommandStart
-from aiogram.types import CallbackQuery, Message
+from aiogram.types import CallbackQuery, Message, User
 
 from keyboards.menus import (
     back_home_inline_keyboard,
@@ -37,7 +37,7 @@ async def _show_menu(message: Message, language: str, *, greeting: str | None = 
     )
 
 
-async def _show_section(message: Message, language: str, section: str) -> None:
+async def _show_section(\n    message: Message,\n    language: str,\n    section: str,\n    *,\n    user: User | None = None,\n) -> None:
     if section == "features":
         text = get_text(language, "features_title")
         keyboard = back_home_inline_keyboard(language)
@@ -171,4 +171,4 @@ async def inline_menu_handler(callback: CallbackQuery) -> None:
         return
 
     if action in {"features", "settings", "profile", "about"}:
-        await _show_section(callback.message, language, action)
+        await _show_section(callback.message, language, action, user=callback.from_user)
