@@ -1,6 +1,6 @@
-# SVS Aiogram Bot Template
+# IELTS Prep AI Telegram Companion
 
-A reusable Telegram bot starter built with **aiogram 3.17** and Python 3.11+.
+A Telegram companion for the IELTS Prep AI platform, built with **aiogram 3.17** and Python 3.11+. The bot uses the platform's Django API and existing VERIX/Gemini service; it does not duplicate IELTS business logic.
 
 ## Features
 
@@ -9,8 +9,10 @@ A reusable Telegram bot starter built with **aiogram 3.17** and Python 3.11+.
 - Per-user language and notification preferences persisted in SQLite.
 - Referral deep links with unique registration tracking and referral counts.
 - Referral sharing through Telegram's share URL.
-- Profile page with referral statistics.
-- Commands: /start, /menu, /settings, /language, /referral, /help, and /ping.
+- Secure one-time account linking to an IELTS Prep AI account.
+- VERIX AI chat routed through the existing Django/Gemini service.
+- IELTS profile, plan, band scores, streak, and completed-test summary.
+- Commands: /start, /menu, /settings, /language, /referral, /help, /ping, /link, /profile, and /verix.
 - Modular handlers, keyboard builders, and service layer.
 - Async application lifecycle with polling.
 
@@ -34,7 +36,7 @@ Python 3.11 or 3.12 is recommended for this pinned dependency set. Python 3.14 m
 
     Copy-Item .env.example .env
 
-Set BOT_TOKEN in .env, then start the bot:
+Set BOT_TOKEN, IELTS_API_BASE_URL, and IELTS_BOT_INTERNAL_SECRET in .env. The internal secret must match TELEGRAM_BOT_INTERNAL_SECRET in the Django backend .env. Then start the bot:
 
     python main.py
 
@@ -49,6 +51,20 @@ Set BOT_TOKEN in .env, then start the bot:
 | /referral | Show your referral link and invite count |
 | /help | Show localized help |
 | /ping | Check whether the bot is responding |
+| /link | Show account-linking instructions |
+| /profile | Show platform profile and IELTS progress |
+| /verix | Ask VERIX an IELTS question |
+
+## IELTS Prep AI integration
+
+1. Start the Django backend and apply migrations.
+2. Configure `TELEGRAM_BOT_INTERNAL_SECRET` in the backend `.env`.
+3. Configure the exact same value as `IELTS_BOT_INTERNAL_SECRET` in the bot `.env`.
+4. Set `TELEGRAM_BOT_USERNAME` in the backend `.env` to this bot's username.
+5. In the platform, open Profile → Connect Telegram and open the generated deep link.
+6. Use `/profile` to view platform data. Send a normal text message or use `/verix` to talk to the existing VERIX service.
+
+The bot uses long polling. Do not configure Telegram webhook delivery for this same bot token while polling is active.
 
 ## Referral tracking
 
@@ -94,6 +110,7 @@ The notification switch stores the user's preference. A scheduler or notificatio
     ├── handlers/
     │   ├── __init__.py
     │   ├── common.py
+    │   ├── companion.py
     │   └── echo.py
     ├── keyboards/
     │   ├── __init__.py
@@ -101,6 +118,7 @@ The notification switch stores the user's preference. A scheduler or notificatio
     ├── services/
     │   ├── __init__.py
     │   ├── i18n.py
+    │   ├── platform_api.py
     │   └── user_preferences.py
     ├── .env.example
     ├── .gitignore
@@ -116,6 +134,8 @@ The notification switch stores the user's preference. A scheduler or notificatio
 | ADMINS | No | empty | Comma-separated Telegram user IDs |
 | LOG_LEVEL | No | INFO | Python logging level |
 | DROP_PENDING_UPDATES | No | true | Discard queued updates when polling starts |
+| IELTS_API_BASE_URL | No | http://127.0.0.1:8000 | Django backend base URL |
+| IELTS_BOT_INTERNAL_SECRET | Yes | — | Shared secret for bot-to-backend requests |
 
 ## Run tests
 
