@@ -16,6 +16,7 @@ from data.config import (
     should_drop_pending_updates,
 )
 from handlers import setup_routers
+from services.user_preferences import initialize_preferences
 
 
 async def on_startup(bot: Bot, admin_ids: set[int]) -> None:
@@ -23,7 +24,7 @@ async def on_startup(bot: Bot, admin_ids: set[int]) -> None:
     logger.info("Bot started")
     for admin_id in admin_ids:
         try:
-            await bot.send_message(admin_id, "Bot ishga tushdi.")
+            await bot.send_message(admin_id, "Bot started successfully.")
         except Exception:
             logger.exception("Could not send startup notification to admin_id=%s", admin_id)
 
@@ -34,6 +35,8 @@ async def main() -> None:
         level=get_log_level(env),
         format="%(asctime)s | %(levelname)s | %(name)s | %(message)s",
     )
+
+    await initialize_preferences()
 
     bot = Bot(
         token=get_bot_token(env),
