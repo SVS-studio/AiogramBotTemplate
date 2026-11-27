@@ -29,6 +29,9 @@ COMMANDS = {
         BotCommand(command="referral", description="Taklif havolasi"),
         BotCommand(command="help", description="Yordam"),
         BotCommand(command="ping", description="Bot holatini tekshirish"),
+        BotCommand(command="link", description="IELTS Prep AI hisobini bog‘lash"),
+        BotCommand(command="profile", description="IELTS profilingiz va natijalar"),
+        BotCommand(command="verix", description="VERIX AI bilan suhbat"),
     ],
     "en": [
         BotCommand(command="start", description="Start the bot"),
@@ -38,6 +41,9 @@ COMMANDS = {
         BotCommand(command="referral", description="Referral link and stats"),
         BotCommand(command="help", description="Show help"),
         BotCommand(command="ping", description="Check bot status"),
+        BotCommand(command="link", description="Link your IELTS Prep AI account"),
+        BotCommand(command="profile", description="View your IELTS profile and scores"),
+        BotCommand(command="verix", description="Chat with VERIX AI"),
     ],
     "ru": [
         BotCommand(command="start", description="Запустить бота"),
@@ -47,6 +53,9 @@ COMMANDS = {
         BotCommand(command="referral", description="Реферальная ссылка"),
         BotCommand(command="help", description="Помощь"),
         BotCommand(command="ping", description="Проверить работу бота"),
+        BotCommand(command="link", description="Связать аккаунт IELTS Prep AI"),
+        BotCommand(command="profile", description="Ваш IELTS-профиль и результаты"),
+        BotCommand(command="verix", description="Чат с VERIX AI"),
     ],
 }
 
