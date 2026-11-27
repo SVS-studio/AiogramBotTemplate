@@ -84,6 +84,10 @@ The notification switch stores the user's preference. A scheduler or notificatio
 ## Project structure
 
     .
+    ├── .github/
+    │   └── workflows/tests.yml
+    ├── tests/
+    │   └── test_user_preferences.py
     ├── data/
     │   ├── config.py
     │   └── bot.sqlite3
@@ -112,6 +116,12 @@ The notification switch stores the user's preference. A scheduler or notificatio
 | ADMINS | No | empty | Comma-separated Telegram user IDs |
 | LOG_LEVEL | No | INFO | Python logging level |
 | DROP_PENDING_UPDATES | No | true | Discard queued updates when polling starts |
+
+## Run tests
+
+    python -m unittest discover -s tests -v
+
+GitHub Actions runs the unit tests and Python bytecode compilation on pushes and pull requests to main.
 
 ## Development notes
 
