@@ -35,10 +35,9 @@ class UserPreferencesTests(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(settings["referral_count"], 1)
 
     async def test_self_referral_is_not_counted(self) -> None:
-        await user_preferences.register_user(3003)
         created, credited = await user_preferences.register_user(3003, 3003)
 
-        self.assertFalse(created)
+        self.assertTrue(created)
         self.assertFalse(credited)
         settings = await user_preferences.get_settings(3003)
         self.assertEqual(settings["referral_count"], 0)
