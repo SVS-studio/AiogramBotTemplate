@@ -1,3 +1,5 @@
+from urllib.parse import quote
+
 from aiogram.types import InlineKeyboardMarkup, ReplyKeyboardMarkup
 from aiogram.utils.keyboard import InlineKeyboardBuilder, ReplyKeyboardBuilder
 
@@ -66,10 +68,12 @@ def settings_inline_keyboard(language: str, notifications_enabled: bool) -> Inli
 
 def referral_inline_keyboard(language: str, referral_url: str) -> InlineKeyboardMarkup:
     builder = InlineKeyboardBuilder()
-    builder.button(
-        text=get_text(language, "share_referral"),
-        url=f"https://t.me/share/url?url={referral_url}&text={get_text(language, 'share_referral_text')}",
+    share_url = (
+        "https://t.me/share/url"
+        f"?url={quote(referral_url, safe='')}"
+        f"&text={quote(get_text(language, 'share_referral_text'), safe='')}"
     )
+    builder.button(text=get_text(language, "share_referral"), url=share_url)
     builder.button(text=get_text(language, "home"), callback_data="menu:home")
     builder.adjust(1)
     return builder.as_markup()
