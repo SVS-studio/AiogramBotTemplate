@@ -128,7 +128,7 @@ async def start_handler(message: Message) -> None:
         if raw_referrer.isdigit():
             referrer_id = int(raw_referrer)
 
-    is_new_user, referral_credited = await register_user(
+    _, referral_credited = await register_user(
         message.from_user.id,
         referrer_id,
     )
@@ -153,6 +153,14 @@ async def menu_handler(message: Message) -> None:
     if message.from_user is None:
         return
     await _show_menu(message, (await get_settings(message.from_user.id))["language"])
+
+
+@router.message(Command("settings"))
+async def settings_handler(message: Message) -> None:
+    if message.from_user is None:
+        return
+    settings = await get_settings(message.from_user.id)
+    await _show_section(message, settings["language"], "settings")
 
 
 @router.message(Command("language"))
