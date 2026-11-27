@@ -13,21 +13,16 @@ def load_config() -> Env:
     env = Env()
     env.read_env()
 
-    try:
-        env.str("BOT_TOKEN")
-    except Exception as exc:
+    if not env.str("BOT_TOKEN", "").strip():
         raise ConfigError(
-            "BOT_TOKEN is missing. Create a .env file based on .env.example."
-        ) from exc
+            "BOT_TOKEN is missing or empty. Set it in your .env file."
+        )
 
     return env
 
 
 def get_bot_token(env: Env) -> str:
-    token = env.str("BOT_TOKEN").strip()
-    if not token:
-        raise ConfigError("BOT_TOKEN cannot be empty.")
-    return token
+    return env.str("BOT_TOKEN").strip()
 
 
 def get_admin_ids(env: Env) -> set[int]:
