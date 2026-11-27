@@ -16,7 +16,7 @@ TEXTS: Final[dict[str, dict[str, str]]] = {
         "welcome": "Assalomu alaykum, {name}! 👋\n\nBot ishga tayyor. Quyidagi menyudan foydalaning.",
         "help": "📖 <b>Yordam</b>\n/start — botni ishga tushirish\n/menu — asosiy menyu\n/settings — sozlamalar\n/language — tilni o‘zgartirish\n/referral — taklif havolasi va statistika\n/help — yordam\n/ping — bot holatini tekshirish\n/link — platforma hisobini bog‘lash\n/profile — IELTS profilingiz\n/verix — VERIX AI",
         "menu_title": "🏠 <b>Asosiy menyu</b>\nKerakli bo‘limni tanlang:",
-        "features_title": "🧩 <b>Imkoniyatlar</b>\n\n• Reply Keyboard orqali tezkor navigatsiya\n• Inline Keyboard orqali bo‘limlarni boshqarish\n• O‘zbek, ingliz va rus tillari\n• Referral tracking va statistika\n• Foydalanuvchi sozlamalarini SQLite'da saqlash",
+        "features_title": "🧩 <b>IELTS Prep AI imkoniyatlari</b>\n\n• VERIX AI bilan IELTS bo‘yicha suhbat\n• Platformadagi IELTS profilingiz va band natijalari\n• Telegram orqali xavfsiz hisob bog‘lash\n• O‘zbek, ingliz va rus tillari.",
         "settings_title": "⚙️ <b>Sozlamalar</b>\nTil: {language}\nBildirishnomalar: {notification_status}\n\nTugmalar orqali sozlamalarni o‘zgartiring.",
         "choose_language": "🌐 <b>Tilni tanlang</b>",
         "language_saved": "✅ Til O‘zbekcha qilib o‘rnatildi.",
