@@ -108,7 +108,31 @@ TEXTS: Final[dict[str, dict[str, str]]] = {
 }
 
 
-def get_text(language: str, key: str, **kwargs: str) -> str:
-    """Return a translated string, falling back to Uzbek for unknown locales."""
-    locale = language if language in TEXTS else DEFAULT_LANGUAGE
-    return TEXTS[locale][key].format(**kwargs) if kwargs else TEXTS[locale][key]
+def get_text(locale: str, key: str, **kwargs) -> str:
+    """
+    Return translated text with formatted placeholders.
+
+    `locale` is the selected translation language.
+    `language` and `language_name` are supported as translation placeholders.
+    """
+
+    if "language_name" in kwargs:
+        kwargs.setdefault("language", kwargs["language_name"])
+
+    if locale not in TEXTS:
+        locale = "en"
+
+    if key not in TEXTS[locale]:
+        raise KeyError(
+            f"Translation key '{key}' not found for language '{locale}'"
+        )
+
+    template = TEXTS[locale][key]
+
+    try:
+        return template.format(**kwargs) if kwargs else template
+    except KeyError as error:
+        raise KeyError(
+            f"Missing placeholder {error} in translation "
+            f"'{key}' for language '{locale}'"
+        ) from error
