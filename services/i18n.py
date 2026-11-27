@@ -14,7 +14,7 @@ LANGUAGE_NAMES: Final = {
 TEXTS: Final[dict[str, dict[str, str]]] = {
     "uz": {
         "welcome": "Assalomu alaykum, {name}! 👋\n\nBot ishga tayyor. Quyidagi menyudan foydalaning.",
-        "help": "📖 <b>Yordam</b>\n/start — botni ishga tushirish\n/menu — asosiy menyu\n/language — tilni o‘zgartirish\n/help — yordam",
+        "help": "📖 <b>Yordam</b>\n/start — botni ishga tushirish\n/menu — asosiy menyu\n/language — tilni o‘zgartirish\n/help — yordam\n/ping — bot holatini tekshirish",
         "menu_title": "🏠 <b>Asosiy menyu</b>\nKerakli bo‘limni tanlang:",
         "features_title": "🧩 <b>Imkoniyatlar</b>\n\n• Reply Keyboard orqali tezkor navigatsiya\n• Inline Keyboard orqali bo‘limlarni boshqarish\n• Uch tilli interfeys\n• Til tanlovini SQLite'da saqlash\n• /ping demo komandasi",
         "settings_title": "⚙️ <b>Sozlamalar</b>\nInterfeys tilini o‘zgartirishingiz mumkin.",
@@ -34,7 +34,7 @@ TEXTS: Final[dict[str, dict[str, str]]] = {
     },
     "en": {
         "welcome": "Hello, {name}! 👋\n\nThe bot is ready. Use the menu below to navigate.",
-        "help": "📖 <b>Help</b>\n/start — start the bot\n/menu — open the main menu\n/language — change language\n/help — show help",
+        "help": "📖 <b>Help</b>\n/start — start the bot\n/menu — open the main menu\n/language — change language\n/help — show help\n/ping — check bot status",
         "menu_title": "🏠 <b>Main menu</b>\nChoose a section:",
         "features_title": "🧩 <b>Features</b>\n\n• Quick navigation with Reply Keyboard\n• Section controls with Inline Keyboard\n• Three interface languages\n• Language preference persisted in SQLite\n• /ping demo command",
         "settings_title": "⚙️ <b>Settings</b>\nYou can change the interface language here.",
@@ -54,7 +54,7 @@ TEXTS: Final[dict[str, dict[str, str]]] = {
     },
     "ru": {
         "welcome": "Здравствуйте, {name}! 👋\n\nБот готов к работе. Используйте меню ниже.",
-        "help": "📖 <b>Помощь</b>\n/start — запустить бота\n/menu — главное меню\n/language — изменить язык\n/help — помощь",
+        "help": "📖 <b>Помощь</b>\n/start — запустить бота\n/menu — главное меню\n/language — изменить язык\n/help — помощь\n/ping — проверить работу бота",
         "menu_title": "🏠 <b>Главное меню</b>\nВыберите раздел:",
         "features_title": "🧩 <b>Возможности</b>\n\n• Быстрая навигация через Reply Keyboard\n• Управление разделами через Inline Keyboard\n• Три языка интерфейса\n• Сохранение языка в SQLite\n• Демокоманда /ping",
         "settings_title": "⚙️ <b>Настройки</b>\nЗдесь можно изменить язык интерфейса.",
