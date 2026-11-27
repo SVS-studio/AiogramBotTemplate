@@ -14,7 +14,7 @@ LANGUAGE_NAMES: Final = {
 TEXTS: Final[dict[str, dict[str, str]]] = {
     "uz": {
         "welcome": "Assalomu alaykum, {name}! 👋\n\nBot ishga tayyor. Quyidagi menyudan foydalaning.",
-        "help": "📖 <b>Yordam</b>\n/start — botni ishga tushirish\n/menu — asosiy menyu\n/language — tilni o‘zgartirish\n/referral — taklif havolasi va statistika\n/help — yordam\n/ping — bot holatini tekshirish",
+        "help": "📖 <b>Yordam</b>\n/start — botni ishga tushirish\n/menu — asosiy menyu\n/settings — sozlamalar\n/language — tilni o‘zgartirish\n/referral — taklif havolasi va statistika\n/help — yordam\n/ping — bot holatini tekshirish",
         "menu_title": "🏠 <b>Asosiy menyu</b>\nKerakli bo‘limni tanlang:",
         "features_title": "🧩 <b>Imkoniyatlar</b>\n\n• Reply Keyboard orqali tezkor navigatsiya\n• Inline Keyboard orqali bo‘limlarni boshqarish\n• O‘zbek, ingliz va rus tillari\n• Referral tracking va statistika\n• Foydalanuvchi sozlamalarini SQLite'da saqlash",
         "settings_title": "⚙️ <b>Sozlamalar</b>\nTil: {language}\nBildirishnomalar: {notification_status}\n\nTugmalar orqali sozlamalarni o‘zgartiring.",
@@ -45,7 +45,7 @@ TEXTS: Final[dict[str, dict[str, str]]] = {
     },
     "en": {
         "welcome": "Hello, {name}! 👋\n\nThe bot is ready. Use the menu below to navigate.",
-        "help": "📖 <b>Help</b>\n/start — start the bot\n/menu — open the main menu\n/language — change language\n/referral — referral link and stats\n/help — show help\n/ping — check bot status",
+        "help": "📖 <b>Help</b>\n/start — start the bot\n/menu — open the main menu\n/settings — open settings\n/language — change language\n/referral — referral link and stats\n/help — show help\n/ping — check bot status",
         "menu_title": "🏠 <b>Main menu</b>\nChoose a section:",
         "features_title": "🧩 <b>Features</b>\n\n• Reply Keyboard navigation\n• Inline Keyboard controls\n• Uzbek, English, and Russian languages\n• Referral tracking and statistics\n• User preferences stored in SQLite",
         "settings_title": "⚙️ <b>Settings</b>\nLanguage: {language}\nNotifications: {notification_status}\n\nUse the buttons to update your preferences.",
@@ -76,7 +76,7 @@ TEXTS: Final[dict[str, dict[str, str]]] = {
     },
     "ru": {
         "welcome": "Здравствуйте, {name}! 👋\n\nБот готов к работе. Используйте меню ниже.",
-        "help": "📖 <b>Помощь</b>\n/start — запустить бота\n/menu — главное меню\n/language — изменить язык\n/referral — реферальная ссылка и статистика\n/help — помощь\n/ping — проверить работу бота",
+        "help": "📖 <b>Помощь</b>\n/start — запустить бота\n/menu — главное меню\n/settings — настройки\n/language — изменить язык\n/referral — реферальная ссылка и статистика\n/help — помощь\n/ping — проверить работу бота",
         "menu_title": "🏠 <b>Главное меню</b>\nВыберите раздел:",
         "features_title": "🧩 <b>Возможности</b>\n\n• Навигация через Reply Keyboard\n• Управление через Inline Keyboard\n• Узбекский, английский и русский языки\n• Реферальная система и статистика\n• Сохранение настроек в SQLite",
         "settings_title": "⚙️ <b>Настройки</b>\nЯзык: {language}\nУведомления: {notification_status}\n\nИзмените настройки с помощью кнопок.",
