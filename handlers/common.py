@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 from html import escape
-from urllib.parse import quote
 
 from aiogram import F, Router
 from aiogram.filters import Command, CommandStart
@@ -109,7 +108,7 @@ async def _show_section(
             count=str(count),
             link=escape(referral_url),
         )
-        keyboard = referral_inline_keyboard(language, quote(referral_url, safe=""))
+        keyboard = referral_inline_keyboard(language, referral_url)
     else:
         return
 
